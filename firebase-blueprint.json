@@ -1,0 +1,306 @@
+{
+  "entities": {
+    "School": {
+      "title": "School",
+      "description": "A registered school tenant on the Smart School Hub platform",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "code": { "type": "string", "maxLength": 20 },
+        "registrationNumber": { "type": "string", "maxLength": 50 },
+        "ownershipType": { "type": "string", "enum": ["Government", "Private", "Faith-based", "Community"] },
+        "educationLevels": { "type": "array" },
+        "region": { "type": "string", "maxLength": 100 },
+        "district": { "type": "string", "maxLength": 100 },
+        "ward": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 255 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "website": { "type": "string", "maxLength": 150 },
+        "motto": { "type": "string", "maxLength": 255 },
+        "logoUrl": { "type": "string", "maxLength": 500 },
+        "ownerId": { "type": "string", "maxLength": 128 },
+        "academicYear": { "type": "string", "maxLength": 20 },
+        "currentTerm": { "type": "string", "maxLength": 20 },
+        "status": { "type": "string", "enum": ["active", "suspended", "archived"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "code", "ownerId", "educationLevels", "academicYear", "currentTerm"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Platform user profile including primary school membership and roles",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 100 },
+        "fullName": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "photoUrl": { "type": "string", "maxLength": 500 },
+        "activeSchoolId": { "type": "string", "maxLength": 128 },
+        "isSuperAdmin": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "fullName"]
+    },
+    "SchoolMembership": {
+      "title": "SchoolMembership",
+      "description": "User association with a specific school and assigned positions/roles",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "userEmail": { "type": "string", "maxLength": 100 },
+        "userName": { "type": "string", "maxLength": 100 },
+        "positions": { "type": "array" },
+        "permissions": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "pending", "rejected", "inactive"] },
+        "joinedAt": { "type": "string" }
+      },
+      "required": ["id", "schoolId", "userId", "status"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Enrolled student at a school",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 50 },
+        "admissionNumber": { "type": "string", "maxLength": 50 },
+        "fullName": { "type": "string", "maxLength": 120 },
+        "gender": { "type": "string", "enum": ["Male", "Female"] },
+        "dateOfBirth": { "type": "string", "maxLength": 20 },
+        "level": { "type": "string", "enum": ["Primary", "O-Level", "A-Level"] },
+        "formStandard": { "type": "string", "maxLength": 30 },
+        "streamId": { "type": "string", "maxLength": 128 },
+        "combinationId": { "type": "string", "maxLength": 128 },
+        "parentName": { "type": "string", "maxLength": 100 },
+        "parentPhone": { "type": "string", "maxLength": 50 },
+        "parentEmail": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 200 },
+        "status": { "type": "string", "enum": ["Active", "Transferred", "Graduated", "Suspended", "Withdrawn"] },
+        "admissionDate": { "type": "string" },
+        "academicYear": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["id", "schoolId", "studentId", "fullName", "level", "formStandard", "streamId", "status"]
+    },
+    "Stream": {
+      "title": "Stream",
+      "description": "A class stream (mkondo) within a form/standard",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 60 },
+        "code": { "type": "string", "maxLength": 20 },
+        "level": { "type": "string", "enum": ["Primary", "O-Level", "A-Level"] },
+        "formStandard": { "type": "string", "maxLength": 30 },
+        "academicYear": { "type": "string", "maxLength": 20 },
+        "classTeacherId": { "type": "string", "maxLength": 128 },
+        "classTeacherName": { "type": "string", "maxLength": 100 },
+        "maxCapacity": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "archived"] }
+      },
+      "required": ["id", "schoolId", "name", "level", "formStandard", "academicYear"]
+    },
+    "Department": {
+      "title": "Department",
+      "description": "Academic department in a school (e.g. Science, Arts)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 80 },
+        "code": { "type": "string", "maxLength": 20 },
+        "description": { "type": "string", "maxLength": 300 },
+        "hodId": { "type": "string", "maxLength": 128 },
+        "hodName": { "type": "string", "maxLength": 100 },
+        "memberIds": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "inactive"] }
+      },
+      "required": ["id", "schoolId", "name", "code"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "Curriculum subject offered at the school",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 80 },
+        "code": { "type": "string", "maxLength": 20 },
+        "level": { "type": "string", "enum": ["Primary", "O-Level", "A-Level", "All"] },
+        "departmentId": { "type": "string", "maxLength": 128 },
+        "periodsPerWeek": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "inactive"] }
+      },
+      "required": ["id", "schoolId", "name", "code", "level"]
+    },
+    "Combination": {
+      "title": "Combination",
+      "description": "A-Level study combination (e.g., PCM, PCB, HGL, CBG)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "code": { "type": "string", "maxLength": 20 },
+        "name": { "type": "string", "maxLength": 100 },
+        "subjectIds": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "inactive"] }
+      },
+      "required": ["id", "schoolId", "code", "name"]
+    },
+    "Examination": {
+      "title": "Examination",
+      "description": "Academic examination or test schedule",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "type": { "type": "string", "enum": ["Weekly Test", "Monthly Test", "Series", "Mid-Term", "Terminal", "Annual", "Mock", "Other"] },
+        "academicYear": { "type": "string", "maxLength": 20 },
+        "term": { "type": "string", "maxLength": 20 },
+        "level": { "type": "string", "enum": ["Primary", "O-Level", "A-Level", "All"] },
+        "formStandard": { "type": "string", "maxLength": 30 },
+        "startDate": { "type": "string", "maxLength": 30 },
+        "endDate": { "type": "string", "maxLength": 30 },
+        "maxScore": { "type": "number" },
+        "status": { "type": "string", "enum": ["DRAFT", "SUBMITTED", "VERIFIED", "APPROVED", "RELEASED", "LOCKED"] }
+      },
+      "required": ["id", "schoolId", "name", "type", "academicYear", "term", "status"]
+    },
+    "ExamMark": {
+      "title": "ExamMark",
+      "description": "Individual student mark record for an examination subject",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "examId": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "subjectId": { "type": "string", "maxLength": 128 },
+        "score": { "type": "number" },
+        "maxScore": { "type": "number" },
+        "isAbsent": { "type": "boolean" },
+        "isExcused": { "type": "boolean" },
+        "teacherId": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["DRAFT", "SUBMITTED", "VERIFIED", "APPROVED", "RELEASED", "LOCKED"] },
+        "submittedAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "schoolId", "examId", "studentId", "subjectId"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record for a student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "streamId": { "type": "string", "maxLength": 128 },
+        "date": { "type": "string", "maxLength": 20 },
+        "status": { "type": "string", "enum": ["Present", "Absent", "Late", "Excused"] },
+        "remark": { "type": "string", "maxLength": 200 },
+        "markedBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "schoolId", "studentId", "streamId", "date", "status"]
+    },
+    "FeePayment": {
+      "title": "FeePayment",
+      "description": "Student school fee payment transaction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 120 },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["Bank", "M-Pesa", "TigoPesa", "AirtelMoney", "Cash"] },
+        "referenceNumber": { "type": "string", "maxLength": 60 },
+        "term": { "type": "string", "maxLength": 20 },
+        "academicYear": { "type": "string", "maxLength": 20 },
+        "date": { "type": "string", "maxLength": 30 },
+        "recordedBy": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["Completed", "Pending", "Reversed"] }
+      },
+      "required": ["id", "schoolId", "studentId", "amount", "paymentMethod", "referenceNumber"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable security and action audit log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "schoolId": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "userName": { "type": "string", "maxLength": 100 },
+        "action": { "type": "string", "maxLength": 80 },
+        "module": { "type": "string", "maxLength": 60 },
+        "recordId": { "type": "string", "maxLength": 128 },
+        "details": { "type": "string", "maxLength": 500 },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "schoolId", "userId", "action", "module", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/schools/{schoolId}": {
+      "schema": "School",
+      "description": "School profile and configuration"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/school_memberships/{membershipId}": {
+      "schema": "SchoolMembership",
+      "description": "School user memberships and permissions"
+    },
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Enrolled students filtered by schoolId"
+    },
+    "/streams/{streamId}": {
+      "schema": "Stream",
+      "description": "Class streams filtered by schoolId"
+    },
+    "/departments/{departmentId}": {
+      "schema": "Department",
+      "description": "Departments filtered by schoolId"
+    },
+    "/subjects/{subjectId}": {
+      "schema": "Subject",
+      "description": "Subjects filtered by schoolId"
+    },
+    "/combinations/{combinationId}": {
+      "schema": "Combination",
+      "description": "A-level combinations filtered by schoolId"
+    },
+    "/examinations/{examId}": {
+      "schema": "Examination",
+      "description": "Examinations filtered by schoolId"
+    },
+    "/marks/{markId}": {
+      "schema": "ExamMark",
+      "description": "Examination marks entered by teachers"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Daily student attendance records"
+    },
+    "/fee_payments/{paymentId}": {
+      "schema": "FeePayment",
+      "description": "Fee payments recorded by accountants"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Audit trails for system events"
+    }
+  }
+}

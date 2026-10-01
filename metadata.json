@@ -1,0 +1,6 @@
+{
+  "name": "Smart School Hub – Tanzania",
+  "description": "Multi-tenant School Management Information System for Tanzanian Primary, O-Level, and A-Level schools. Manage students, teachers, streams, combinations, examinations, automated results, attendance, and parent-student portals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
